@@ -6,12 +6,12 @@ readonly PBK_2="PBK_2"
 readonly PBK_3="PBK_3"
 
 f_sha256d() {
-  echo -n $(sha256sum -b $1 | head -c 64) | xxd -r -p | sha256sum | cut -d ' ' -f 1
+  echo -n $(sha256sum -b $1 | head -c 64) | xxd -r -ps | sha256sum | cut -d ' ' -f 1
 }
 
 f_fileInfo() {
   echo ""
-  echo "FileName: $1"
+  echo "FilePath: $1"
   echo "FileSize: $(wc -c <$1) bytes"
   echo "FileHash: $(f_sha256d $1)"
   echo ""
@@ -21,13 +21,13 @@ f_main() {
   rm -f $1
   echo -e -n 'TRZF' >>$1
   echo -e -n '\x00\x00\x00\x00' >>$1
-   # key_index
+  # key_index
   echo -e -n '\x00' >>$1
-   # key_index
+  # key_index
   echo -e -n '\x00' >>$1
-   # key_index
+  # key_index
   echo -e -n '\x00' >>$1
-   # flags
+  # flags
   echo -e -n '\x00' >>$1
   # reserved
   echo -e -n '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' >>$1
@@ -49,7 +49,7 @@ f_main() {
   echo -e -n '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' >>$1
   echo -e -n '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' >>$1
   echo -e -n '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' >>$1
-  
+
   f_fileInfo $1
 }
 
