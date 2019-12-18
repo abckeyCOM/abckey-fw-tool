@@ -2,5 +2,4 @@
 
 ## :wink: about
 
-## :star: License
-[MIT](LICENSE)
+## :star: [MIT](LICENSE)
