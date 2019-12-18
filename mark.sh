@@ -1,21 +1,10 @@
 #!/bin/bash
+source f.sh
 # demo: ./mark.sh ./dist/mark.bin
 
 readonly PBK_1="PBK_1"
 readonly PBK_2="PBK_2"
 readonly PBK_3="PBK_3"
-
-f_sha256d() {
-  echo -n $(sha256sum -b $1 | head -c 64) | xxd -r -ps | sha256sum | cut -d ' ' -f 1
-}
-
-f_fileInfo() {
-  echo ""
-  echo "FilePath: $1"
-  echo "FileSize: $(wc -c <$1) bytes"
-  echo "FileHash: $(f_sha256d $1)"
-  echo ""
-}
 
 f_main() {
   rm -f $1

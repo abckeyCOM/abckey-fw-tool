@@ -1,24 +1,16 @@
 #!/bin/bash
+source f.sh
 # demo: ./align.sh ./test/boot.bin ./dist/_boot.bin 32768
-
-f_sha256d() {
-  echo -n $(sha256sum -b $1 | head -c 64) | xxd -r -ps | sha256sum | head -c 64
-}
-
-f_fileInfo() {
-  echo ""
-  echo "FilePath: $1"
-  echo "FileSize: $(wc -c <$1) bytes"
-  echo "FileHash: $(f_sha256d $1)"
-  echo ""
-}
 
 f_main() {
   rm -f $2
   cp -f -p $1 $2
-  readonly file_size=$(wc -c <$2)
   readonly total_size=$3
-  echo $(printf %0$(($(($total_size - $file_size)) * 2))d 0) | xxd -r -ps >>$2
+  readonly file_size=$(wc -c <$2)
+  readonly fill_size=$(($total_size - $file_size))
+  readonly zero_num=$(($fill_size * 2))
+  readonly zero_str=$(printf %0${zero_list}d 0)
+  echo $zero_str | xxd -r -ps >>$2
   f_fileInfo $1
   f_fileInfo $2
 }
