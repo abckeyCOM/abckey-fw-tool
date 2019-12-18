@@ -1,5 +1,4 @@
-# :beers: abckey-fw-tool
+# abckey-fw-tool
 
-## :wink: about
-
-## :star: [MIT](LICENSE)
+## License
+[MIT](LICENSE)
