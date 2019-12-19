@@ -1,6 +1,6 @@
 #!/bin/bash
 source f.sh
-# demo: ./align.sh ./test/boot.bin ./dist/_boot.bin 32768
+# demo: ./align.sh tmp/boot.bin dist/_boot.bin 32768
 
 f_main() {
   rm -f $2
