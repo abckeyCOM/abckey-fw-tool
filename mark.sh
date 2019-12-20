@@ -10,7 +10,7 @@ readonly PBK_1="PBK_1"
 readonly PBK_2="PBK_2"
 readonly PBK_3="PBK_3"
 
-f_main() {
+main() {
   rm -f $OUT_FILE
   echo -e -n 'TRZF' >>$OUT_FILE
   echo -e -n '\x00\x00\x00\x00' >>$OUT_FILE
@@ -43,7 +43,7 @@ f_main() {
   echo -e -n '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' >>$OUT_FILE
   echo -e -n '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' >>$OUT_FILE
 
-  f_fileInfo $OUT_FILE
+  file_info $OUT_FILE
 }
 
-f_main "$@"
+main "$@"

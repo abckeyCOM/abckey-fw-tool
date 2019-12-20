@@ -1,71 +1,82 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source f.sh
-# demo: ./bitcoin.sh
+source ticktick.sh
 
-readonly IN_PATH="bitcoin"
+# ./bitcoin.sh tmp/bitcoin 201912201814
 
+readonly IN_PATH=$1
+readonly OUT_FILE_MARK=$2
 readonly OUT_FILE_C="coin_info.c"
 readonly OUT_FILE_H="coin_info.h"
 readonly OUT_FILE_PATH="dist"
 readonly OUT_C="$OUT_FILE_PATH/$OUT_FILE_C"
 readonly OUT_H="$OUT_FILE_PATH/$OUT_FILE_H"
 
-f_c() {
-echo "
+out_c() {
+  for file_name in $(ls $IN_PATH); do
+    local file=`cat $IN_PATH/$file_name`
+    tickParse "$file"
+    local COIN_LIST="$COIN_LIST
+    {
+      .coin_name = \"``coin_name``\",
+      .coin_shortcut = \" ``coin_shortcut``\",
+      .maxfee_kb =  $(to_int ``maxfee_kb``),
+      .signed_message_header = \"\x$(to_hex $(str_len "``signed_message_header``"))\" \"``signed_message_header``\",
+      .has_segwit = ``segwit``,
+      .has_fork_id = $(is_def ``fork_id``),
+      .force_bip143 = ``force_bip143``,
+      .decred = ``decred``,
+      .decimals = ``decimals``,
+      .address_type = ``address_type``,
+      .address_type_p2sh = ``address_type_p2sh``,
+      .xpub_magic = 0x$(to_hex ``xpub_magic`` 8),
+      .xpub_magic_segwit_p2sh = 0x$(to_hex ``xpub_magic_segwit_p2sh`` 8),
+      .xpub_magic_segwit_native =  0x$(to_hex ``xpub_magic_segwit_native`` 8),
+      .fork_id = $(to_int ``fork_id``),
+      .bech32_prefix = $(to_str ``bech32_prefix``),
+      .cashaddr_prefix = $(to_str ``cashaddr_prefix``),
+      .coin_type = ($(to_int ``slip44``) | 0x80000000),
+      .negative_fee = ``negative_fee``,
+      .curve_name = $(str2upper ``curve_name``)_NAME,
+      .curve = &``curve_name``_info,
+    },"
+  done
+  
+  echo "
+// $OUT_FILE_MARK
 #include \"coins.h\"
 
 #include \"curves.h\"
 #include \"secp256k1.h\"
 
 const CoinInfo coins[COINS_COUNT] = {
-  {
-    .coin_name = ${c_str(c.coin_name)},
-    .coin_shortcut = ${c_str(" " + c.coin_shortcut)},
-    .maxfee_kb = ${c_int(c.maxfee_kb)},
-    .signed_message_header = ${signed_message_header(c.signed_message_header)},
-    .has_segwit = ${c_bool(c.segwit)},
-    .has_fork_id = ${defined(c.fork_id)},
-    .force_bip143 = ${c_bool(c.force_bip143)},
-    .decred = ${c_bool(c.decred)},
-    .decimals = ${c.decimals},
-    .address_type = ${c.address_type},
-    .address_type_p2sh = ${c.address_type_p2sh},
-    .xpub_magic = ${hex(c.xpub_magic)},
-    .xpub_magic_segwit_p2sh = ${hex(c.xpub_magic_segwit_p2sh)},
-    .xpub_magic_segwit_native = ${hex(c.xpub_magic_segwit_native)},
-    .fork_id = ${c_int(c.fork_id)},
-    .bech32_prefix = ${c_str(c.bech32_prefix)},
-    .cashaddr_prefix = ${c_str(c.cashaddr_prefix)},
-    .coin_type = (${c_int(c.slip44)} | 0x80000000),
-    .negative_fee = ${c_bool(c.negative_fee)},
-    .curve_name = ${c.curve_name.upper()}_NAME,
-    .curve = &${c.curve_name}_info,
-  },
+$COIN_LIST
 };
-" >>$1
+  " >$OUT_C
 }
 
-f_h() {
-echo "
-#ifndef __COIN_INFO_H__
-#ifndef __COIN_INFO_H__
+out_h() {
+  echo "
+// $OUT_FILE_MARK
+ifndef __COIN_INFO_H__
+ifndef __COIN_INFO_H__
 
-#include \"coins.h\"
+include \"coins.h\"
 
-#define COINS_COUNT (${test})
+define COINS_COUNT ($(ls -l $IN_PATH | grep "^-" | wc -l))
 
 extern const CoinInfo coins[COINS_COUNT];
 
-#endif
-" >>$1
+endif
+  " >$OUT_H
 }
 
-f_main() {
+main() {
   rm -f $OUT_C $OUT_H
-  f_c $OUT_C
-  f_h $OUT_H
-  f_fileInfo $OUT_C
-  f_fileInfo $OUT_H
+  out_c
+  out_h
+  file_info $OUT_C
+  file_info $OUT_H
 }
 
-f_main "$@"
+main "$@"
