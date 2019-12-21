@@ -13,9 +13,11 @@ readonly OUT_C="$OUT_FILE_PATH/$OUT_FILE_C"
 readonly OUT_H="$OUT_FILE_PATH/$OUT_FILE_H"
 
 out_c() {
+  local index=0
   for file_name in $(ls $IN_PATH); do
-    local file=`cat $IN_PATH/$file_name`
-    tickParse "$file"
+    ((index++))
+    echo "【$index】$IN_PATH/$file_name"
+    tickParse `cat $IN_PATH/$file_name`
     local COIN_LIST="$COIN_LIST
     {
       .coin_name = \"``coin_name``\",

@@ -22,7 +22,7 @@ file_info() {
 to_hex() {
   local num=0
   local size=2
-  if [ -n "$1" ]; then
+  if [ -n "$1" ] && [ $1 != "null" ]; then
     num=$1
   fi
   if [ -n "$2" ]; then

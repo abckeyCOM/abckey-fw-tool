@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source f.sh
-# demo: ./cat.sh dist/_boot.bin dist/_mark.bin dist/boot_mark.bin
-# demo: ./cat.sh dist/boot_mark.bin tmp/core.bin dist/boot_mark_core.bin
+
+# ./cat.sh dist/_boot.bin dist/_mark.bin dist/boot_mark.bin
+# ./cat.sh dist/boot_mark.bin tmp/core.bin dist/boot_mark_core.bin
 
 main() {
   rm -f $3
