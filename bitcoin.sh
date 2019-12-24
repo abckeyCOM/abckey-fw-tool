@@ -11,7 +11,6 @@ readonly OUT_FILE_PATH="dist"
 readonly OUT_C="$OUT_FILE_PATH/$OUT_FILE_C"
 readonly OUT_H="$OUT_FILE_PATH/$OUT_FILE_H"
 
-
 index=0
 for file_name in $(ls $SRC_PATH); do
   ((index++))
