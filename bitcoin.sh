@@ -3,19 +3,19 @@ source f.sh
 
 # ./bitcoin.sh tmp/bitcoin 201912201814
 
-readonly SRC_PATH=$1
-readonly OUT_FILE_MARK=$2
-readonly OUT_FILE_C="coin_info.c"
-readonly OUT_FILE_H="coin_info.h"
-readonly OUT_FILE_PATH="dist"
-readonly OUT_C="$OUT_FILE_PATH/$OUT_FILE_C"
-readonly OUT_H="$OUT_FILE_PATH/$OUT_FILE_H"
+readonly SRC_DIR=$1
+readonly OUT_VER=$2
+readonly OUT_DIR="dist"
+readonly OUT_C_NAME="coin_info.c"
+readonly OUT_H_NAME="coin_info.h"
+readonly OUT_C="$OUT_DIR/$OUT_C_NAME"
+readonly OUT_H="$OUT_DIR/$OUT_H_NAME"
 
 index=0
-for file_name in $(ls $SRC_PATH); do
+for file_name in $(ls $SRC_DIR); do
   ((index++))
-  echo "$index $SRC_PATH/$file_name"
-  json_str="$(cat $SRC_PATH/$file_name)"
+  echo "$index $SRC_DIR/$file_name"
+  json_str="$(cat $SRC_DIR/$file_name)"
   signed_message_header=$(bj "$json_str" signed_message_header)
   force_bip143=$(bj "$json_str" force_bip143)
   decred=$(bj "$json_str" decred)
@@ -59,7 +59,7 @@ for file_name in $(ls $SRC_PATH); do
 done
 
 cat << EOF > $OUT_C
-// $OUT_FILE_MARK
+// $OUT_VER
 #include "coins.h"
 #include "curves.h"
 #include "secp256k1.h"
@@ -67,11 +67,11 @@ const CoinInfo coins[COINS_COUNT] = {$COIN_LIST};
 EOF
 
 cat << EOF > $OUT_H
-// $OUT_FILE_MARK
+// $OUT_VER
 #ifndef __COIN_INFO_H__
 #ifndef __COIN_INFO_H__
 #include "coins.h"
-#define COINS_COUNT ($(ls -l $SRC_PATH | grep "^-" | wc -l))
+#define COINS_COUNT ($(ls -l $SRC_DIR | grep "^-" | wc -l))
 extern const CoinInfo coins[COINS_COUNT];
 #endif
 EOF
