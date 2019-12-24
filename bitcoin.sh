@@ -15,28 +15,28 @@ index=0
 for file_name in $(ls $SRC_DIR); do
   ((index++))
   echo "$index $SRC_DIR/$file_name"
-  json_str="$(cat $SRC_DIR/$file_name)"
-  signed_message_header=$(bj "$json_str" signed_message_header)
-  force_bip143=$(bj "$json_str" force_bip143)
-  decred=$(bj "$json_str" decred)
-  decimals=$(bj "$json_str" decimals)
-  address_type=$(bj "$json_str" address_type)
-  address_type_p2sh=$(bj "$json_str" address_type_p2sh)
-  xpub_magic=$(bj "$json_str" xpub_magic)
-  xpub_magic_segwit_p2sh=$(bj "$json_str" xpub_magic_segwit_p2sh)
-  xpub_magic_segwit_native=$(bj "$json_str" xpub_magic_segwit_native)
-  fork_id=$(bj "$json_str" fork_id)
-  bech32_prefix=$(bj "$json_str" bech32_prefix)
-  cashaddr_prefix=$(bj "$json_str" cashaddr_prefix)
-  slip44=$(bj "$json_str" slip44)
-  negative_fee=$(bj "$json_str" negative_fee)
-  curve_name=$(bj "$json_str" curve_name)
+  json="$(cat $SRC_DIR/$file_name)"
+  signed_message_header=$(bj "$json" signed_message_header)
+  force_bip143=$(bj "$json" force_bip143)
+  decred=$(bj "$json" decred)
+  decimals=$(bj "$json" decimals)
+  address_type=$(bj "$json" address_type)
+  address_type_p2sh=$(bj "$json" address_type_p2sh)
+  xpub_magic=$(bj "$json" xpub_magic)
+  xpub_magic_segwit_p2sh=$(bj "$json" xpub_magic_segwit_p2sh)
+  xpub_magic_segwit_native=$(bj "$json" xpub_magic_segwit_native)
+  fork_id=$(bj "$json" fork_id)
+  bech32_prefix=$(bj "$json" bech32_prefix)
+  cashaddr_prefix=$(bj "$json" cashaddr_prefix)
+  slip44=$(bj "$json" slip44)
+  negative_fee=$(bj "$json" negative_fee)
+  curve_name=$(bj "$json" curve_name)
   
   COIN_LIST="$COIN_LIST
   {
-    .coin_name = \"$(bj "$json_str" coin_name)\",
-    .coin_shortcut = \" $(bj "$json_str" coin_shortcut)\",
-    .maxfee_kb =  $(to_int $(bj "$json_str" maxfee_kb)),
+    .coin_name = \"$(bj "$json" coin_name)\",
+    .coin_shortcut = \" $(bj "$json" coin_shortcut)\",
+    .maxfee_kb =  $(to_int $(bj "$json" maxfee_kb)),
     .signed_message_header = \"\x$(to_hex $(str_len "$signed_message_header"))\" \"$signed_message_header\",
     .has_segwit = $segwit,
     .has_fork_id = $(is_def "$fork_id"),
