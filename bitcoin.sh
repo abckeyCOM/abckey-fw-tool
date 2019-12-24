@@ -12,10 +12,10 @@ readonly OUT_C="$OUT_DIR/$OUT_C_NAME"
 readonly OUT_H="$OUT_DIR/$OUT_H_NAME"
 
 index=0
-for file_name in $(ls $SRC_DIR); do
+for file in $(abs_dir $SRC_DIR); do
   ((index++))
-  echo "$index $SRC_DIR/$file_name"
-  json="$(cat $SRC_DIR/$file_name)"
+  echo "$index $file"
+  json=$(cat $file)
   signed_message_header=$(bj "$json" signed_message_header)
   force_bip143=$(bj "$json" force_bip143)
   decred=$(bj "$json" decred)

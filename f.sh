@@ -76,6 +76,19 @@ is_def() {
   fi
 }
 
+abs_dir(){
+  if [[ ! -n "$1" ]]; then echo "abs_dir: No file path!" exit 1; fi
+  for file in $1/*
+  do
+    if test -f $file
+    then
+      echo $file
+    else
+      abs_dir $file
+    fi
+  done
+}
+
 # bj.sh is a Bash library for parsing JSON. https://github.com/memotype/bj.sh
 # Copyright Isaac Freeman (memotype@gmail.com), licensed under the MIT license
 bj() { declare -A bs=(['[']=] ['{']=});local sre='^"(([^\"]|\\.)*)"' \

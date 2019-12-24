@@ -10,7 +10,7 @@ readonly OUT_VER=$2
 readonly OUT_H_NAME="ethereum_networks.h"
 readonly OUT_H="$OUT_DIR/$OUT_H_NAME"
 
-json="$(cat $SRC_DIR/$SRC_JSON)"
+json=$(cat $SRC_DIR/$SRC_JSON)
 for((i = 0, old_id;; i++)); do
   chain_id=$(bj "$json" $i chain_id)
   if [[ $chain_id == $old_id ]]; then break; fi
