@@ -5,16 +5,12 @@ source f.sh
 
 readonly SRC_DIR=$1
 readonly OUT_VER=$2
-readonly OUT_DIR="dist"
-readonly OUT_C_NAME="coin_info.c"
-readonly OUT_H_NAME="coin_info.h"
-readonly OUT_C="$OUT_DIR/$OUT_C_NAME"
-readonly OUT_H="$OUT_DIR/$OUT_H_NAME"
+readonly OUT_C="dist/coin_info.c"
+readonly OUT_H="dist/coin_info.h"
 
-index=0
 for file in $(abs_dir $SRC_DIR); do
-  ((index++))
-  echo "$index $file"
+  ((i++))
+  echo "$i $file"
   json=$(cat $file)
   signed_message_header=$(bj "$json" signed_message_header)
   force_bip143=$(bj "$json" force_bip143)
