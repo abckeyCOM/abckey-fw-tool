@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 source f.sh
-
+# Merge files
 # ./cat.sh dist/_boot.bin dist/_mark.bin dist/boot_mark.bin
 # ./cat.sh dist/boot_mark.bin tmp/core.bin dist/boot_mark_core.bin
 

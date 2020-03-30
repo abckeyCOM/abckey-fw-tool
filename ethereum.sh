@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 source f.sh
 # v0.0.1
+# generate ethereum networks
 # ./ethereum.sh tmp/ethereum 201912201814
 
 readonly SRC_JSON="$1/networks.json"

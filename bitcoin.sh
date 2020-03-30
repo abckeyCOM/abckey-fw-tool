@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 source f.sh
-
+# Generate bitcoin info
 # ./bitcoin.sh tmp/bitcoin 201912201814
 
 readonly SRC_DIR=$1

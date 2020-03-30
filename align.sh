@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 source f.sh
 # v0.0.1
+# Align boot binary
 # ./align.sh tmp/boot.bin
 
 readonly OUT_FILE_MARK=$2

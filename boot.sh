@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 source f.sh
 # v0.0.1
+# Embedded recovery boot
 # ./boot.sh tmp/boot.dat v1.0.0
 
 readonly SRC_DAT=$1
